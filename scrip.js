@@ -3,6 +3,7 @@ var score = 0;
 var names = "";
 var htmlElements;
 var cells;
+var listCharts = [];
 
 var firebaseConfig = {
     apiKey: "AIzaSyBZ7oPs-_usfTmKnu5YwdDIt9b0OR0ZjBs",
@@ -20,12 +21,43 @@ firebase.initializeApp(firebaseConfig);
 // Get a reference to the database service
 var database = firebase.database();
 
-function abc() {
-    firebase.database().ref("/" + names).set({
+//firebase function
+function wirteToFirebase() {
+    database.ref("/" + names).set({
         Player: names,
         Score: score
     });
 }
+
+
+// database.ref().on("value", function(snapshot) {
+//     var term;
+//     term = snapshot.val();
+//     console.log(term);
+// })
+function getListCharts() {
+    database.ref().orderByChild("Score").on("value", function(snapshot) {
+        listCharts = addToList(snapshot);
+
+        var size = listCharts.length;
+        document.getElementById("chartstop1").innerHTML = "TOP 1: " + listCharts[size - 1].Player + ": " + listCharts[size - 1].Score;
+        document.getElementById("chartstop2").innerHTML = "TOP 2: " + listCharts[size - 2].Player + ": " + listCharts[size - 2].Score;
+        document.getElementById("chartstop3").innerHTML = "TOP 3: " + listCharts[size - 3].Player + ": " + listCharts[size - 3].Score;
+        document.getElementById("chartstop4").innerHTML = "TOP 4: " + listCharts[size - 4].Player + ": " + listCharts[size - 4].Score;
+        document.getElementById("chartstop5").innerHTML = "TOP 5: " + listCharts[size - 5].Player + ": " + listCharts[size - 5].Score;
+    })
+}
+
+function addToList(snapshot) {
+    var list = [];
+    snapshot.forEach(function(childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+        list.push(item);
+    });
+    return list
+}
+
 
 function createField() {
     if (htmlElements) {
@@ -96,7 +128,7 @@ function slide(array, size) {
                 score += array[i];
                 console.log(score);
                 document.getElementById("score").innerHTML = "Score: " + score
-                abc();
+                wirteToFirebase();
 
             }
         }
@@ -215,7 +247,9 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+
 function init() {
+    getListCharts();
     names = prompt("What your name");
     document.getElementById("name").innerHTML = "Player: " + names;
     createField();
