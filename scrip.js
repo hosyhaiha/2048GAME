@@ -251,6 +251,9 @@ document.addEventListener('keydown', function(e) {
 function init() {
     getListCharts();
     names = prompt("What your name");
+    if (names == null || names.trim() == "") {
+        window.location.reload();
+    }
     document.getElementById("name").innerHTML = "Player: " + names;
     createField();
     createCells();
