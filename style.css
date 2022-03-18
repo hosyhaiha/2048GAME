@@ -1,0 +1,10 @@
+#field {
+    border: 1px solid black;
+}
+
+.cell {
+    border: 1px solid black;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+}
