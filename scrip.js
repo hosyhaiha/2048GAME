@@ -197,7 +197,9 @@ function moveDown() {
     return changed;
 }
 
+
 function isGameOver() {
+    //check 1 lượt nếu còn ô nào mà giá trị đang là 0 thì vẫn chơi đc tiếp
     for (var y = 0; y < size; y++) {
         for (var x = 0; x < size; x++) {
             if (cells[y][x] == 0) {
@@ -205,14 +207,20 @@ function isGameOver() {
             }
         }
     }
+    //Nếu ô đó khác không và ô đó bằng ô phía dưới hoặc bằng ô bên cạnh thì chơi được tiếp
     for (var y = 0; y < size - 1; y++) {
         for (var x = 0; x < size - 1; x++) {
             var c = cells[y][x]
-            if (c != 0 && (c == cells[y + 1][x] || c == cells[y][x + 1])) {
+            if (c != 0 && (c == cells[y + 1][x] ||
+                    c == cells[y][x + 1] ||
+                    cells[y + 1][x + 1] == cells[y][x + 1] ||
+                    cells[y + 1][x + 1] == cells[y + 1][x])) {
                 return false;
             }
+
         }
     }
+    //End Game
     return true;
 }
 
