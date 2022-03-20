@@ -4,20 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>2048 Game</title>
     <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
-    <p id="name">Player: </p>
-    <p id="score">Score: 0</p>
-    <table id="field"></table>
+    <div class="container">
+        <div class="board-game">
+            <table id="field"></table>
+        </div>
 
-    <h2 id="chartstop1"></h2>
-    <h3 id="chartstop2"></h3>
-    <h4 id="chartstop3"></h4>
-    <h5 id="chartstop4"></h5>
-    <h5 id="chartstop5"></h5>
+        <div class="board-info">
+            <div class="game-name">
+                <p id="title">Welcome to 2048</p>
+            </div>
+            <div class="player">
+                <p id="name">Player: </p>
+                <p id="score">Score: 0</p>
+
+            </div>
+            <div class="list-mark">
+                <p id="top-gp">Top Game Players:</p>
+                <h2 id="chartstop1"></h2>
+                <h3 id="chartstop2"></h3>
+                <h4 id="chartstop3"></h4>
+                <h5 id="chartstop4"></h5>
+                <h5 id="chartstop5"></h5>
+            </div>
+
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
     <script src="scrip.js"></script>

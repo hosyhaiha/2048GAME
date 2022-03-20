@@ -62,21 +62,23 @@ function addToList(snapshot) {
 function createField() {
     if (htmlElements) {
         return;
-    }
-    htmlElements = [];
-    var table = document.getElementById('field');
-    for (var y = 0; y < size; y++) {
-        var tr = document.createElement('tr');
-        var trElements = [];
-        for (var x = 0; x < size; x++) {
-            var td = document.createElement('td');
-            td.setAttribute('class', 'cell');
-            tr.appendChild(td);
-            trElements.push(td);
+    } else {
+        htmlElements = [];
+        var table = document.getElementById('field');
+        for (var y = 0; y < size; y++) {
+            var tr = document.createElement('tr');
+            var trElements = [];
+            for (var x = 0; x < size; x++) {
+                var td = document.createElement('td');
+                td.setAttribute('class', 'cell');
+                tr.appendChild(td);
+                trElements.push(td);
+            }
+            htmlElements.push(trElements);
+            table.appendChild(tr);
         }
-        htmlElements.push(trElements);
-        table.appendChild(tr);
     }
+
 }
 
 function createCells() {
@@ -106,8 +108,8 @@ function draw() {
             if (v == 0) {
                 td.setAttribute('style', 'background-color: white');
             } else {
-                var h = 20 + 24 * Math.log2(2048 / v);
-                td.setAttribute('style', 'background-color: hsl(' + h + ', 100%, 50%)');
+                var h = 55 * v;
+                td.setAttribute('style', 'background-color: hsl(' + h + ', 100%, 70%)');
             }
         }
     }

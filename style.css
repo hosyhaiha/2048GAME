@@ -1,10 +1,195 @@
+/* game đang chưa ở giữa màn
+    thanh bên phải chưa fit màn hình
+*/
+
+body {
+    background-image: url('img/PCW.png');
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    background-size: cover;
+    text-align: center;
+    justify-content: space-around;
+}
+
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.board-game {
+    justify-content: center;
+    text-align: center;
+    flex: 65%;
+}
+
 #field {
-    border: 1px solid black;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-width: 5px;
+    background-color: #cccccc;
+    border-radius: 10px 10px;
+    border-spacing: 10px;
+    margin: 0 auto;
+    animation: 4s fieldgame ease-out 1;
+}
+
+@keyframes fieldgame {
+    from {
+        opacity: 0;
+        transform: translateX(-40%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
 
 .cell {
-    border: 1px solid black;
+    border: 1px solid #cccccc;
     text-align: center;
-    width: 80px;
-    height: 80px;
+    width: 145px;
+    height: 145px;
+    border-radius: 10px 10px;
+    background-color: #cccccc;
+    font-size: 40px;
+}
+
+.board-info {
+    text-align: center;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    flex: 35%;
+    margin: 0 auto;
+    max-width: 35%;
+}
+
+.game-name {
+    border-radius: 15px;
+    background-color: inherit;
+    background-color: rgba(175, 175, 250, 0.5);
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    margin: 5px;
+    text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777, 0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333, 0 8px 7px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.2);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    animation: 4s gamename-run ease-out 1;
+}
+
+@keyframes gamename-run {
+    from {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+.player {
+    display: block;
+    font-size: 30px;
+    border-radius: 15px;
+    background-color: inherit;
+    background-color: rgba(175, 175, 220, 0.5);
+    text-align: center;
+    animation: 4s player-run ease-out 1;
+    margin: 5px;
+}
+
+@keyframes player-run {
+    from {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+#name {
+    float: left;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 20px;
+}
+
+#score {
+    flex: 50%;
+    float: right;
+    padding-right: 20px;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-mark {
+    border-radius: 15px;
+    background-color: inherit;
+    background-color: rgba(175, 175, 220, 0.5);
+    text-align: center;
+    margin: 5px;
+    animation: 4s listmark-run ease-out 1;
+}
+
+@keyframes listmark-run {
+    from {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+#top-gp {
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
+    text-align: center;
+    font-size: 30px;
+}
+
+#chartstop1 {
+    color: red;
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
+}
+
+#chartstop2 {
+    color: blue;
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
+}
+
+#chartstop3 {
+    color: yellow;
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
+}
+
+#chartstop4 {
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
+}
+
+#chartstop5 {
+    border: 1px solid white;
+    background-color: rgba(175, 175, 220, 1);
+    border-radius: 15px;
 }
