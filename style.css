@@ -40,7 +40,7 @@ body {
 @keyframes fieldgame {
     from {
         opacity: 0;
-        transform: translateX(-40%);
+        transform: translateX(-10%);
     }
     to {
         opacity: 1;

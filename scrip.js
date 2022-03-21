@@ -59,7 +59,7 @@ function addToList(snapshot) {
 }
 
 
-function createField() {
+function createTableGame() {
     if (htmlElements) {
         return;
     } else {
@@ -121,7 +121,7 @@ function slide(array, size) {
         return a.filter(x => x != 0);
     }
 
-    array = filterEmpty(array);
+    array = filterEmpty(array); // ?????????? not clear
     if (array.length > 0) {
         for (var i = 0; i < array.length - 1; i++) {
             if (array[i] == array[i + 1]) {
@@ -152,6 +152,7 @@ function slideLeft() {
     return changed;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function swap(x1, y1, x2, y2) {
     var tmp = cells[y1][x1];
     cells[y1][x1] = cells[y2][x2];
@@ -226,6 +227,10 @@ function isGameOver() {
     return true;
 }
 
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+}, false);
+
 document.addEventListener('keydown', function(e) {
     var code = e.keyCode;
     var ok;
@@ -242,6 +247,11 @@ document.addEventListener('keydown', function(e) {
         case 39:
             ok = moveRight();
             break;
+        case 73:
+        case 74:
+        case 83:
+        case 123:
+            disabledEvent(e);
         default:
             return;
     }
@@ -255,6 +265,16 @@ document.addEventListener('keydown', function(e) {
             init();
         }, 1000);
     }
+
+    function disabledEvent(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        } else if (window.event) {
+            window.event.cancelBubble = true;
+        }
+        e.preventDefault();
+        return false;
+    }
 });
 
 
@@ -265,7 +285,7 @@ function init() {
         window.location.reload();
     }
     document.getElementById("name").innerHTML = "Player: " + names;
-    createField();
+    createTableGame();
     createCells();
     new Array(3).fill(0).forEach(generateInEmptyCell);
     draw();
