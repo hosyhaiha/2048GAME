@@ -4,6 +4,7 @@ var names = "";
 var htmlElements;
 var cells;
 var listCharts = [];
+var button = document.getElementById('btn');
 
 var firebaseConfig = {
     apiKey: "AIzaSyBZ7oPs-_usfTmKnu5YwdDIt9b0OR0ZjBs",
@@ -23,10 +24,18 @@ var database = firebase.database();
 
 //firebase function
 function wirteToFirebase() {
-    database.ref("/" + names).set({
-        Player: names,
-        Score: score
-    });
+    var writeok = true;
+    for (let index = 0; index < listCharts.length; index++) {
+        if (names == listCharts[index].Player && score < listCharts[index].Score)
+            writeok = false;
+    }
+
+    if (writeok == true) {
+        database.ref("/" + names).set({
+            Player: names,
+            Score: score
+        });
+    }
 }
 
 
@@ -40,11 +49,9 @@ function getListCharts() {
         listCharts = addToList(snapshot);
 
         var size = listCharts.length;
-        document.getElementById("chartstop1").innerHTML = "TOP 1: " + listCharts[size - 1].Player + ": " + listCharts[size - 1].Score;
-        document.getElementById("chartstop2").innerHTML = "TOP 2: " + listCharts[size - 2].Player + ": " + listCharts[size - 2].Score;
-        document.getElementById("chartstop3").innerHTML = "TOP 3: " + listCharts[size - 3].Player + ": " + listCharts[size - 3].Score;
-        document.getElementById("chartstop4").innerHTML = "TOP 4: " + listCharts[size - 4].Player + ": " + listCharts[size - 4].Score;
-        document.getElementById("chartstop5").innerHTML = "TOP 5: " + listCharts[size - 5].Player + ": " + listCharts[size - 5].Score;
+        for (let index = 1; index <= 5; index++) {
+            document.getElementById("chartstop" + index).innerHTML = "TOP " + index + ": " + listCharts[size - index].Player + ": " + listCharts[size - index].Score;
+        }
     })
 }
 
@@ -64,7 +71,7 @@ function createTableGame() {
         return;
     } else {
         htmlElements = [];
-        var table = document.getElementById('field');
+        var table = document.getElementById('tab');
         for (var y = 0; y < size; y++) {
             var tr = document.createElement('tr');
             var trElements = [];
@@ -153,6 +160,10 @@ function slideLeft() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//swap(x, y, y, x);
+//     1  2  2  1
+//cells[y][x] = cells[x][y];
 function swap(x1, y1, x2, y2) {
     var tmp = cells[y1][x1];
     cells[y1][x1] = cells[y2][x2];
@@ -210,7 +221,7 @@ function isGameOver() {
             }
         }
     }
-    //Nếu ô đó khác không và ô đó bằng ô phía dưới hoặc bằng ô bên cạnh thì chơi được tiếp
+    //Nếu khác không và ô đó bằng ô phía dưới hoặc bằng ô bên cạnh thì chơi được tiếp
     for (var y = 0; y < size - 1; y++) {
         for (var x = 0; x < size - 1; x++) {
             var c = cells[y][x]
@@ -260,10 +271,10 @@ document.addEventListener('keydown', function(e) {
         draw();
     }
     if (isGameOver()) {
-        setTimeout(function() {
-            alert('Game over');
-            init();
-        }, 1000);
+
+        alert('Game over');
+        button.setAttribute('style', 'display : block');
+
     }
 
     function disabledEvent(e) {
@@ -277,6 +288,9 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+button.addEventListener("click", function(e) {
+    window.location.reload();
+});
 
 function init() {
     getListCharts();
@@ -287,7 +301,7 @@ function init() {
     document.getElementById("name").innerHTML = "Player: " + names;
     createTableGame();
     createCells();
-    new Array(3).fill(0).forEach(generateInEmptyCell);
+    new Array(3).fill(0).forEach(generateInEmptyCell); // ???????
     draw();
 }
 
