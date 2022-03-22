@@ -4,7 +4,7 @@ var names = "";
 var htmlElements;
 var cells;
 var listCharts = [];
-var button = document.getElementById('btn');
+var button = document.getElementById('btn-newgame');
 
 var firebaseConfig = {
     apiKey: "AIzaSyBZ7oPs-_usfTmKnu5YwdDIt9b0OR0ZjBs",
@@ -18,7 +18,6 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 // Get a reference to the database service
 var database = firebase.database();
 
@@ -65,13 +64,25 @@ function addToList(snapshot) {
     return list
 }
 
+// popup
+let btnPopup = document.getElementById("btn-howtoplay");
+let popup = document.querySelector(".popup");
+btnPopup.onclick = function() {
+    popup.style.display = "block"
+}
+
+window.onclick = function(e) {
+    if (e.target == popup) {
+        popup.style.display = "none"
+    }
+}
 
 function createTableGame() {
     if (htmlElements) {
         return;
     } else {
         htmlElements = [];
-        var table = document.getElementById('tab');
+        var table = document.getElementById('field');
         for (var y = 0; y < size; y++) {
             var tr = document.createElement('tr');
             var trElements = [];
@@ -88,7 +99,7 @@ function createTableGame() {
 
 }
 
-function createCells() {
+function createCell() {
     cells = [];
     for (var y = 0; y < size; y++) {
         cells.push(new Array(size).fill(0));
@@ -128,20 +139,20 @@ function slide(array, size) {
         return a.filter(x => x != 0);
     }
 
-    array = filterEmpty(array); // ?????????? not clear
-    if (array.length > 0) {
-        for (var i = 0; i < array.length - 1; i++) {
-            if (array[i] == array[i + 1]) {
-                array[i] *= 2;
-                array[i + 1] = 0;
-                score += array[i];
-                console.log(score);
-                document.getElementById("score").innerHTML = "Score: " + score
-                wirteToFirebase();
+    array = filterEmpty(array);
 
-            }
+    for (var i = 0; i < array.length - 1; i++) {
+        if (array[i] == array[i + 1]) {
+            array[i] *= 2;
+            array[i + 1] = 0;
+            score += array[i];
+            // console.log(score);
+            document.getElementById("score").innerHTML = "Score: " + score
+            wirteToFirebase();
+
         }
     }
+
     array = filterEmpty(array);
     while (array.length < size) {
         array.push(0);
@@ -159,7 +170,6 @@ function slideLeft() {
     return changed;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //swap(x, y, y, x);
 //     1  2  2  1
@@ -170,7 +180,7 @@ function swap(x1, y1, x2, y2) {
     cells[y2][x2] = tmp;
 }
 
-function mirror() {
+function flipTableVetical() {
     for (var y = 0; y < size; y++) {
         for (var xLeft = 0, xRight = size - 1; xLeft < xRight; xLeft++, xRight--) {
             swap(xLeft, y, xRight, y);
@@ -178,7 +188,7 @@ function mirror() {
     }
 }
 
-function transpose() {
+function flipTableDiagonal() {
     for (var y = 0; y < size; y++) {
         for (var x = 0; x < y; x++) {
             swap(x, y, y, x);
@@ -191,28 +201,28 @@ function moveLeft() {
 }
 
 function moveRight() {
-    mirror();
+    flipTableVetical();
     var changed = moveLeft();
-    mirror();
+    flipTableVetical();
     return changed;
 }
 
 function moveUp() {
-    transpose();
+    flipTableDiagonal();
     var changed = moveLeft();
-    transpose();
+    flipTableDiagonal();
     return changed;
 }
 
 function moveDown() {
-    transpose();
+    flipTableDiagonal();
     var changed = moveRight();
-    transpose();
+    flipTableDiagonal();
     return changed;
 }
 
 
-function isGameOver() {
+function gameOver() {
     //check 1 lượt nếu còn ô nào mà giá trị đang là 0 thì vẫn chơi đc tiếp
     for (var y = 0; y < size; y++) {
         for (var x = 0; x < size; x++) {
@@ -270,11 +280,8 @@ document.addEventListener('keydown', function(e) {
         generateInEmptyCell();
         draw();
     }
-    if (isGameOver()) {
-
+    if (gameOver()) {
         alert('Game over');
-        button.setAttribute('style', 'display : block');
-
     }
 
     function disabledEvent(e) {
@@ -289,10 +296,19 @@ document.addEventListener('keydown', function(e) {
 });
 
 button.addEventListener("click", function(e) {
-    window.location.reload();
+
+    var ok = confirm("Are you sure ?");
+    if (ok == true) {
+        createTableGame();
+        createCell();
+        new Array(3).fill(0).forEach(generateInEmptyCell);
+        score = 0;
+        document.getElementById("score").innerHTML = "Score: " + score
+        draw();
+    }
 });
 
-function init() {
+function loadGame() {
     getListCharts();
     names = prompt("What your name");
     if (names == null || names.trim() == "") {
@@ -300,9 +316,9 @@ function init() {
     }
     document.getElementById("name").innerHTML = "Player: " + names;
     createTableGame();
-    createCells();
-    new Array(3).fill(0).forEach(generateInEmptyCell); // ???????
+    createCell();
+    new Array(3).fill(0).forEach(generateInEmptyCell);
     draw();
 }
 
-init();
+loadGame();

@@ -10,14 +10,27 @@
 
 <body>
     <div class="container">
-        <button type="button" style="display: none;" id="btn">Play again</button>
         <div class="board-game">
-            <table id="tab"></table>
+            <div class="popup">
+                <div class="popup-content">
+                    <h3>HOW TO PLAY</h3>
+                    <img src="img/howtoplay.gif" alt="">
+                    <p>- Combine tiles of the same number in an attempt to create a tile with the value 2048.</p>
+                    <p>- Pressing the arrow keys or swiping across the game board will move all tiles in the direction of the key pressed/swipe. After all the tiles are done moving a new tile with the value of 2 or 4 will be created in a random empty cell.</p>
+                    <p>- Two tiles with the same number will merge when they collide to create a single tile with double the value.</p>
+                    <p>- The game is over when there are no valid ways for you to move the tiles.</p>
+                </div>
+            </div>
+            <table id="field"></table>
         </div>
 
         <div class="board-info">
             <div class="game-name">
                 <p id="title">Welcome to 2048</p>
+                <div class="btn-menu">
+                    <button id="btn-newgame">New Game</button>
+                    <button id="btn-howtoplay">How To Play &#8265;</button>
+                </div>
             </div>
             <div class="player">
                 <p id="name">Player: </p>
@@ -26,11 +39,15 @@
             </div>
             <div class="list-mark">
                 <p id="top-gp">Top Game Players:</p>
-                <h2 id="chartstop1"></h2>
-                <h3 id="chartstop2"></h3>
-                <h4 id="chartstop3"></h4>
-                <h5 id="chartstop4"></h5>
-                <h5 id="chartstop5"></h5>
+                <div id="chart">
+                    <h2 id="chartstop1"></h2>
+                    <h3 id="chartstop2"></h3>
+                    <h4 id="chartstop3"></h4>
+                    <h5 id="chartstop4"></h5>
+                    <h5 id="chartstop5"></h5>
+
+                </div>
+
             </div>
 
         </div>

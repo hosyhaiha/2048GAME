@@ -1,7 +1,3 @@
-/* game đang chưa ở giữa màn
-    thanh bên phải chưa fit màn hình
-*/
-
 body {
     background-image: url('img/PCW.png');
     background-size: cover;
@@ -9,9 +5,11 @@ body {
 
 .container {
     display: flex;
-    background-size: cover;
     text-align: center;
     justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 800px) {
@@ -25,27 +23,54 @@ body {
     justify-content: center;
     text-align: center;
     flex: 65%;
-}
-
-#tab {
-    border: 1px solid rgba(255, 255, 255, 0);
-    border-width: 5px;
-    background-color: #cccccc;
-    border-radius: 10px 10px;
-    border-spacing: 10px;
-    margin: 0 auto;
     animation: 4s fieldgame ease-out 1;
 }
 
 @keyframes fieldgame {
     from {
         opacity: 0;
-        transform: translateX(-10%);
+        transform: translateX(-40%);
     }
     to {
         opacity: 1;
         transform: translateX(0%);
     }
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    position: relative;
+    background-color: #ffbea3;
+    padding: 15px;
+    margin: auto;
+    width: 65%;
+    font-size: 18px;
+    border-radius: 15px;
+}
+
+.popup-content p {
+    text-align: left;
+    margin-left: 10px;
+}
+
+#field {
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-width: 5px;
+    background-color: #cccccc;
+    border-radius: 10px 10px;
+    border-spacing: 10px;
+    margin: 5px auto;
 }
 
 .cell {
@@ -60,7 +85,7 @@ body {
 
 .board-info {
     text-align: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     display: flex;
     flex-direction: column;
     flex: 35%;
@@ -70,15 +95,11 @@ body {
 
 .game-name {
     border-radius: 15px;
-    background-color: inherit;
     background-color: rgba(175, 175, 250, 0.5);
     text-align: center;
     font-size: 40px;
-    color: white;
-    margin: 5px;
-    text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777, 0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333, 0 8px 7px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.2);
-    font-family: Georgia, 'Times New Roman', Times, serif;
     animation: 4s gamename-run ease-out 1;
+    background-color: #333333;
 }
 
 @keyframes gamename-run {
@@ -92,15 +113,21 @@ body {
     }
 }
 
+#title {
+    text-shadow: 0 1px 0 #999999, 0 2px 0 #888888, 0 3px 0 #777777, 0 4px 0 #666666, 0 5px 0 #555555, 0 6px 0 #444444, 0 7px 0 #333333, 0 8px 7px rgba(0, 0, 0, 0.4), 0 9px 10px rgba(0, 0, 0, 0.2);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+}
+
 .player {
     display: block;
     font-size: 30px;
     border-radius: 15px;
     background-color: inherit;
-    background-color: rgba(175, 175, 220, 0.5);
+    background-color: rgba(175, 175, 220, 0.7);
     text-align: center;
-    animation: 4s player-run ease-out 1;
     margin: 5px;
+    animation: 4s player-run ease-out 1;
 }
 
 @keyframes player-run {
@@ -117,8 +144,8 @@ body {
 #name {
     float: left;
     max-width: 50%;
-    white-space: nowrap;
-    overflow: hidden;
+    color: white;
+    text-shadow: 1px 1px 1px red, 2px 2px 1px red;
     text-overflow: ellipsis;
     padding-left: 20px;
 }
@@ -126,17 +153,20 @@ body {
 #score {
     flex: 50%;
     float: right;
+    color: white;
     padding-right: 20px;
     max-width: 50%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-shadow: 1px 1px 1px blue, 2px 2px 1px blue;
 }
 
 .list-mark {
+    border: 1px solid white;
     border-radius: 15px;
     background-color: inherit;
-    background-color: rgba(175, 175, 220, 0.5);
+    /* background-color: rgba(175, 175, 220, 0.7); */
     text-align: center;
     margin: 5px;
     animation: 4s listmark-run ease-out 1;
@@ -154,42 +184,57 @@ body {
 }
 
 #top-gp {
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
+    border: 1px solid inherit;
     border-radius: 15px;
-    text-align: center;
+    text-decoration-line: underline;
+    text-shadow: 1px 1px 1px white, 2px 2px 1px white;
     font-size: 30px;
+    font-weight: bold;
+}
+
+#chart {
+    margin-top: 0px;
+    border: 1px solid none;
+    border-radius: 15px;
+    background-color: rgba(175, 175, 220, 0.7);
+    margin: 10px;
+    padding: 5px;
 }
 
 #chartstop1 {
     color: red;
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
-    border-radius: 15px;
 }
 
 #chartstop2 {
     color: blue;
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
-    border-radius: 15px;
 }
 
 #chartstop3 {
     color: yellow;
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
-    border-radius: 15px;
 }
 
-#chartstop4 {
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
-    border-radius: 15px;
+.btn-menu {
+    margin: 25px;
 }
 
-#chartstop5 {
-    border: 1px solid white;
-    background-color: rgba(175, 175, 220, 1);
-    border-radius: 15px;
+#btn-howtoplay {
+    font-size: 18px;
+    background-image: linear-gradient(135deg, skyblue, chartreuse);
+    border: none;
+    border-radius: 6px;
+}
+
+#btn-howtoplay:hover {
+    color: #fff;
+}
+
+#btn-newgame {
+    font-size: 18px;
+    background-image: linear-gradient(135deg, red, yellow);
+    border: none;
+    border-radius: 6px;
+}
+
+#btn-newgame:hover {
+    color: #fff;
 }
